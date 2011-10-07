@@ -1,4 +1,4 @@
-\ProvidesClass{javadoc}[2008/05/11 Package for documentation of Java source code. Package is under GNU GENERAL PUBLIC LICENSE]%
+\ProvidesClass{javadoc}[Package for documentation of Java source code. Package is under GNU GENERAL PUBLIC LICENSE.]%
 
 % Uses the Package Longtable to print the Table of inheritance
 \RequirePackage{longtable}%
@@ -8,10 +8,12 @@
 \newif\ifjdbool@HierarchieChapter \jdbool@HierarchieChapterfalse%
 \newif\ifjdbool@HierarchieSection \jdbool@HierarchieSectiontrue%
 \newif\ifjdbool@HierarchieSubSection \jdbool@HierarchieSubSectionfalse%
+\newif\ifjdbool@HierarchieSubSubSection \jdbool@HierarchieSubSubSectionfalse%
 
 \DeclareOption{chapter}{\jdbool@HierarchieChaptertrue \jdbool@HierarchieSectionfalse \jdbool@HierarchieSubSectionfalse}%
 \DeclareOption{section}{\jdbool@HierarchieSectiontrue \jdbool@HierarchieChapterfalse \jdbool@HierarchieSubSectionfalse} %Default
 \DeclareOption{subsection}{\jdbool@HierarchieSubSectiontrue \jdbool@HierarchieChapterfalse \jdbool@HierarchieSectionfalse}%
+\DeclareOption{subsubsection}{\jdbool@HierarchieSubSubSectiontrue \jdbool@HierarchieChapterfalse \jdbool@HierarchieSectionfalse \jdbool@HierarchieSubSectionfalse}%
 
 % Options for the output related to the toc
 % Defines whether the chapter, the section or the elementnames will be part of the toc.
@@ -36,7 +38,9 @@
 %Options to choose the language (def is English)
 %Only the words are translated, there is no further config like babel or encodings
 \newif\ifjdbool@lang@GermanOption \jdbool@lang@GermanOptionfalse%
-\DeclareOption{deutsch}{\jdbool@lang@GermanOptiontrue}%
+\newif\ifjdbool@lang@SpanishOption \jdbool@lang@SpanishOptionfalse
+\DeclareOption{deutsch}{\jdbool@lang@GermanOptiontrue \jdbool@lang@SpanishOptionfalse}%
+\DeclareOption{spanish}{\jdbool@lang@SpanishOptiontrue \jdbool@lang@GermanOptionfalse}%
 
 %Options to choose pdf-intern-links
 \newif\ifjdbool@pdf \jdbool@pdffalse%
@@ -76,6 +80,32 @@
 	\def\jd@lang@inheritOf{Vererbt von}% 
 	\def\jd@lang@inheritancetable{Tabelle mit geerbten Elementen}% 
 \else%
+	\ifjdbool@lang@SpanishOption%
+%Spanish
+	\def\jd@lang@fullname{Nombre completo}%
+	\def\jd@lang@package{Paquete}%
+	\def\jd@lang@inherits{Hereda}%
+	\def\jd@lang@implements{Implementa}%
+	\def\jd@lang@outerclass{Clase externa}%
+	\def\jd@lang@author{Autor}%
+	\def\jd@lang@category{Categor\'ia}%
+	\def\jd@lang@deprecated{Deprecated}%
+	\def\jd@lang@see{Mira tambi\'en}%
+	\def\jd@lang@serial{Serial}%
+	\def\jd@lang@serialData{SerialData}%
+	\def\jd@lang@serialField{SerialField}%
+	\def\jd@lang@parameter{Par\'ametro}%
+	\def\jd@lang@since{Desde}%
+	\def\jd@lang@return{Devuelve}%
+	\def\jd@lang@throws{Lanza}%
+	\def\jd@lang@version{Versi\'on}%
+	\def\jd@lang@field{Campos}%
+	\def\jd@lang@method{M\'etodos}%
+	\def\jd@lang@constr{Constructores}%
+	\def\jd@lang@elementname{Elemento}%
+	\def\jd@lang@inheritOf{Hereda de}% 
+	\def\jd@lang@inheritancetable{Tabla de herencia}% 
+	\else
 %English
 	\def\jd@lang@fullname{Full name}%
 	\def\jd@lang@package{Package}%
@@ -96,10 +126,11 @@
 	\def\jd@lang@version{Version}%
 	\def\jd@lang@field{Fields}%
 	\def\jd@lang@method{Methods}%
-  \def\jd@lang@constr{Construktors}%
+  	\def\jd@lang@constr{Constructors}%
 	\def\jd@lang@elementname{Element}%
 	\def\jd@lang@inheritOf{Inherited from}% 
 	\def\jd@lang@inheritancetable{Inheritancetable}% 
+	\fi
 \fi%
 
 % For internal links, the hyperref package is used
@@ -136,6 +167,13 @@
 		\else%
 			\subsection*{\ifjdbool@pdf\protect\hypertarget{lab:jd:#1:}{#1}\else#1\fi}%
 		\fi%
+	\fi
+	\ifjdbool@HierarchieSubSubSection%
+		\ifjdbool@TocChapter%
+			\subsubsection[#1]{\ifjdbool@pdf\protect\hypertarget{lab:jd:#1:}{#1}\else#1\fi}%
+		\else%
+			\subsubsection*{\ifjdbool@pdf\protect\hypertarget{lab:jd:#1:}{#1}\else#1\fi}%
+		\fi%
 	\fi%
 }%
 
@@ -161,6 +199,13 @@
 			\subsubsection*{#1}%
 		\fi%
 	\fi%
+	\ifjdbool@HierarchieSubSubSection%
+		\ifjdbool@TocSection%
+			\paragraph{#1}%
+		\else%
+			\paragraph*{#1}%
+		\fi%
+	\fi%
 }%
 
 \def\jd@SubSubHeading[#1]#2{%
@@ -184,6 +229,13 @@
 			\ifx\JDtemp@para\@empty	\paragraph{#2} \else \paragraph[#1]{#2} \fi%
 		\else%
 			\paragraph*{#2}%
+		\fi%
+	\fi%
+	\ifjdbool@HierarchieSubSubSection%
+		\ifjdbool@TocNames%
+			\ifx\JDtemp@para\@empty	\subparagraph{#2} \else \subparagraph[#1]{#2} \fi%
+		\else%
+			\subparagraph*{#2}%
 		\fi%
 	\fi%
 }%
