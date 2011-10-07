@@ -1,0 +1,7 @@
+The javadoc package provides an easy way to document source code. It is related to the javadoc system for java source code and tries to provide the same descriptions. But, of course, source code of other languages can be documented using this package. The package is under GNU GENERAL PUBLIC LICENSE\footnote (see www.gnu.org).
+
+A doclet is a class derived from com.sun.javadoc.Doclet that can be used to generate a documentation with the javadoc-tool out of commented java-source-code. By default javadoc generates a HTML documentation, TexGen generates TeX-files according to the javadoc-package. The doclet is under GNU GENERAL PUBLIC LICENSE\footnote (see www.gnu.org).
+
+Das javadoc Package bietet eine einfache Möglichkeit, Dokumentationen von Quellcode zu erstellen. Es leitet sich vom Dokumentationssystem javadoc für Java ab und bietet dieselben Attribute an. Aber natürlich kann auch Quellcode anderer Sprachen damit dokumentiert werden. Das Paket steht unter GNU GENERAL PUBLIC LICENSE\footnote (see www.gnu.org).
+
+Ein Doclet ist eine von com.sun.javadoc.Doclet abgeleitete Klasse, die verwendet werden kann, um mit dem Javadoc-Tool aus kommentierten Java-Quellcode-Dateien eine Dokumentation zu generieren. Standardmäßig werden HTML Dateien generiert, TexGen generiert TeX-Dateien gemäß dem javadoc-Package. Das Doclet steht unter GNU GENERAL PUBLIC LICENSE\footnote (see www.gnu.org).
